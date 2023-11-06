@@ -1,51 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom/client'
 
-const Header = (props) => <h1>{props.course}</h1>
-
-const Content = (props) => {
-  console.log(props.parts)
+const Display = ({counter}) => {
   return (
-    <>
-      <p>{props.parts[0].name} {props.parts[0].exercises}</p>
-      <p>{props.parts[1].name} {props.parts[1].exercises}</p>
-      <p>{props.parts[2].name} {props.parts[2].exercises}</p>
-    </>
+    <h1>{counter}</h1>
   )
 }
 
-const Total = (props) => {
+const Button = ({handleClick, text}) => {
   return (
-    <p>Number of exercises {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}</p>
+    <button onClick={handleClick}>
+      {text}
+    </button>
   )
 }
 
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
+  const [value, setValue] = useState(10)
+
+  const setToValue = (newValue) =>  {
+    return () => setValue(newValue)
   }
 
   return (
-
-    <>
-      <Header course={course.name} />
-      <Content parts={course.parts} />
-      <Total parts={course.parts} />
-    </>
+    <div>
+      <Display counter = {value} />
+      <div>
+        <Button handleClick={setToValue(1000)} text="thousand" />
+        <Button handleClick={setToValue(0)} text="reset" />
+        <Button handleClick={setToValue(value+1)} text="increment" />
+      </div>
+    </div>
   )
 }
 
